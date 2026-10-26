@@ -1,0 +1,2226 @@
+
+<!DOCTYPE HTML>
+<!--
+    Editorial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under
+    the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en">
+<head>
+    <title>SQL Holiday Sales Analysis | Nguyen Khoi Vo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1" />
+    <meta name="description"
+          content="SQL Server Holiday Sales Performance Analysis
+          featuring seasonal revenue, YoY growth,
+          customer segmentation, product performance,
+          and SQL analytics." />
+
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <style>
+        :root {
+            --accent: #f56a6a;
+            --navy: #4c5f8e;
+            --light: #f5f6f7;
+            --border: #e0e4e7;
+            --muted: #7f888f;
+        }
+
+        /* PROJECT HEADER */
+        .project-label {
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .project-subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-intro {
+            max-width: 1050px;
+            line-height: 1.85;
+        }
+
+        /* FOUR SUMMARY CARDS */
+        .project-summary {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .summary-card {
+            min-width: 0;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.4rem;
+            transition: transform 0.25s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .summary-icon {
+            color: var(--accent);
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+        }
+
+        .summary-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .summary-card p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* KPI CARDS */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .kpi-card {
+            min-width: 0;
+            padding: 1.3rem 0.8rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .kpi-value {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* SQL ANALYSIS */
+        .sql-item {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.7rem;
+            margin-bottom: 2.5rem;
+            background: white;
+        }
+
+        .sql-number {
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .sql-item h3 {
+            margin-bottom: 1rem;
+        }
+
+        .sql-item h4 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .sql-item p,
+        .sql-item li {
+            line-height: 1.8;
+        }
+
+        .sql-item li {
+            margin-bottom: 0.45rem;
+        }
+
+        /* CODE BLOCKS */
+        .sql-code {
+            margin: 1.2rem 0;
+            padding: 1.4rem;
+            background: #151b23;
+            color: #e6edf3;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.83rem;
+            line-height: 1.7;
+            white-space: pre;
+            tab-size: 4;
+        }
+
+        .sql-code code {
+            display: block;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            color: inherit;
+            background: transparent;
+            font: inherit;
+            white-space: inherit;
+        }
+
+        /* RESULTS */
+        .result-image {
+            margin: 1.5rem 0;
+        }
+
+        .result-image a {
+            display: block;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #151515;
+        }
+
+        .result-image img {
+            display: block;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            margin: 0 auto;
+            transition: transform 0.25s ease;
+        }
+
+        .result-image a:hover img {
+            transform: scale(1.01);
+        }
+
+        .result-caption {
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 0.7rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .results-grid .result-image {
+            min-width: 0;
+        }
+
+        /* INSIGHTS */
+        .insight-box {
+            background: var(--light);
+            border-left: 3px solid var(--accent);
+            padding: 1.2rem 1.4rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1.5rem;
+        }
+
+        .insight-box h4 {
+            margin-top: 0;
+        }
+
+        .insight-box ul {
+            margin-bottom: 0;
+        }
+
+        .method-note {
+            margin-top: 1rem;
+            padding: 1rem 1.2rem;
+            background: #fff8f3;
+            border-left: 3px solid #e0a35b;
+            font-size: 0.9rem;
+        }
+
+        /* FINAL IMPACT */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .impact-card {
+            padding: 1.5rem;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .impact-card .icon {
+            font-size: 1.6rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .impact-card h3 {
+            margin-bottom: 0.6rem;
+        }
+
+        /* BUTTONS */
+        .project-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .project-actions .button {
+            margin: 0;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1280px) {
+            .project-summary,
+            .kpi-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 736px) {
+            .project-summary,
+            .impact-grid,
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sql-item {
+                padding: 1rem;
+            }
+
+            .sql-code {
+                font-size: 0.73rem;
+                padding: 1rem;
+            }
+
+            .project-actions {
+                flex-direction: column;
+            }
+
+            .project-actions .button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="is-preload">
+
+<div id="wrapper">
+
+    <!-- MAIN -->
+    <div id="main">
+        <div class="inner">
+
+            <!-- HEADER -->
+            <header id="header">
+                <a href="index.html" class="logo">
+                    <strong>Nguyen Khoi Vo</strong> Portfolio
+                </a>
+
+                <ul class="icons">
+                    <li>
+                        <a href="https://www.facebook.com/Khoinuko2005/"
+                           class="icon brands fa-facebook-f"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="label">Facebook</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.linkedin.com/in/khoivo1907/"
+                           class="icon brands fa-linkedin"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="label">LinkedIn</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://github.com/Nukeoov"
+                           class="icon brands fa-github"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="label">GitHub</span>
+                        </a>
+                    </li>
+                </ul>
+            </header>
+
+            <!-- ==========================
+                 PROJECT OVERVIEW
+            ========================== -->
+            <section>
+
+                <p>
+                    <a href="My Projects.html">
+                        &larr; Back to My Projects
+                    </a>
+                </p>
+
+                <p class="project-label">
+                    SQL Server / Data Analytics Project
+                </p>
+
+                <header class="major">
+                    <h1>
+                        Holiday Sales Performance Analysis
+                    </h1>
+                </header>
+
+                <p class="project-subtitle">
+                    SQL Analytics | Sales Performance |
+                    Customer Behavior
+                </p>
+
+                <h2>Project Overview</h2>
+
+                <p class="section-intro">
+                    Analyzed holiday sales transaction
+                    data using SQL Server to evaluate
+                    seasonal revenue, profitability,
+                    sales channels, geographic performance,
+                    product categories, and customer
+                    purchasing behavior.
+
+                    Developed analytical queries using
+                    Common Table Expressions (CTEs),
+                    self-joins, aggregations, date functions,
+                    and conditional logic to transform
+                    transaction-level data into
+                    actionable business insights.
+                </p>
+
+                <!-- SUMMARY CARDS -->
+                <div class="project-summary">
+
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <span class="icon solid fa-database"></span>
+                        </div>
+
+                        <h3>Tools</h3>
+
+                        <p>
+                            SQL Server<br>
+                            T-SQL<br>
+                            SQL Query Editor
+                        </p>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <span class="icon solid fa-code"></span>
+                        </div>
+
+                        <h3>Methods</h3>
+
+                        <p>
+                            CTEs<br>
+                            Self-JOINs<br>
+                            GROUP BY<br>
+                            CASE WHEN<br>
+                            Date Functions<br>
+                            Aggregations
+                        </p>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <span class="icon solid fa-bullseye"></span>
+                        </div>
+
+                        <h3>Goal</h3>
+
+                        <p>
+                            Evaluate holiday sales
+                            performance, identify
+                            revenue drivers,
+                            and understand customer
+                            purchasing patterns.
+                        </p>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <span class="icon solid fa-chart-line"></span>
+                        </div>
+
+                        <h3>Deliverable</h3>
+
+                        <p>
+                            SQL-based analysis covering
+                            seasonal growth, channel
+                            performance, geography,
+                            products, customer segments,
+                            and purchasing trends.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- KEY METRICS -->
+                <h2>Project Highlights</h2>
+
+                <div class="kpi-grid">
+
+                    <div class="kpi-card">
+                        <div class="kpi-value">$7.09M</div>
+                        <div class="kpi-label">
+                            2021–2022 Revenue
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-value">+1.9%</div>
+                        <div class="kpi-label">
+                            Latest Season YoY Growth
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-value">64.7%</div>
+                        <div class="kpi-label">
+                            Overall In-store Sales Share
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-value">76.9%</div>
+                        <div class="kpi-label">
+                            2021–2022 Profit Margin
+                        </div>
+                    </div>
+
+                </div>
+
+                <p>
+                    <em>
+                        Dataset: FP20Analytics Challenge 12.
+                        Seasonal results cover four complete
+                        Christmas periods from 2018–2019
+                        through 2021–2022. Aggregate
+                        customer and product results can
+                        include multiple seasons.
+                    </em>
+                </p>
+
+            </section>
+
+            <!-- ==========================
+                 SQL QUERY ANALYSIS
+            ========================== -->
+            <section>
+
+                <header class="major">
+                    <h2>SQL Queries & Analysis Results</h2>
+                </header>
+
+                <p class="section-intro">
+                    Each analysis presents the business
+                    objective, SQL logic, query output,
+                    and insights derived from the data.
+
+                    Query numbering follows the original
+                    project. Question 2 is excluded
+                    because creating the required
+                    database view was restricted.
+                    Queries 3–10 reference the existing
+                    dbo.v_xmas_sales view.
+                </p>
+
+                <!-- ==========================
+                     QUERY 1
+                ========================== -->
+                <article class="sql-item">
+
+                    <p class="sql-number">SQL Query 01</p>
+
+                    <h3>
+                        Seasonal Revenue, Cost & Profit
+                    </h3>
+
+                    <h4>Objective</h4>
+
+                    <p>
+                        Calculate revenue, units sold,
+                        costs, and profit for each
+                        complete Christmas season
+                        to evaluate overall business
+                        performance.
+                    </p>
+
+                    <h4>SQL Implementation</h4>
+
+                    <p>
+                        Used a CTE to assign each
+                        transaction to its Christmas
+                        season, excluding the incomplete
+                        2017–2018 period.
+
+                        Applied SUM, GROUP BY,
+                        CASE WHEN, EOMONTH,
+                        and ROUND to aggregate
+                        seasonal results.
+                    </p>
+
+                    <pre class="sql-code"><code>;WITH xmas_sales AS (
+    SELECT
+        CASE
+            WHEN MONTH([date]) = 1
+            THEN YEAR([date]) - 1
+            ELSE YEAR([date])
+        END AS xmas_year,
+
+        CASE
+            WHEN MONTH([date]) = 1
+            THEN CONCAT(
+                YEAR([date]) - 1,
+                '-',
+                YEAR([date])
+            )
+            ELSE CONCAT(
+                YEAR([date]),
+                '-',
+                YEAR([date]) + 1
+            )
+        END AS xmas_season,
+
+        s.*
+
+    FROM dbo.xmas_sales s
+
+    WHERE EOMONTH([date]) &lt;&gt; '2018-01-31'
+),
+
+seasonal_sales AS (
+    SELECT
+        xmas_year,
+        xmas_season,
+        SUM(total_sales) AS sales,
+        SUM(quantity) AS quantity,
+        SUM(cost) AS cost,
+        SUM(profit) AS profit
+
+    FROM xmas_sales
+
+    GROUP BY
+        xmas_year,
+        xmas_season
+)
+
+SELECT
+    xmas_year,
+    xmas_season,
+
+    ROUND(sales / POWER(10.0, 6), 2)
+        AS sales,
+
+    ROUND(quantity / POWER(10.0, 3), 1)
+        AS quantity,
+
+    ROUND(cost / POWER(10.0, 6), 2)
+        AS cost,
+
+    ROUND(profit / POWER(10.0, 6), 2)
+        AS profit
+
+FROM seasonal_sales
+ORDER BY xmas_year;</code></pre>
+
+                    <div class="result-image">
+
+                        <a href="images/sql1.png"
+                           target="_blank"
+                           rel="noopener noreferrer">
+
+                            <img src="images/sql1.png"
+                                 alt="Seasonal sales cost and profit SQL results"
+                                 loading="lazy" />
+                        </a>
+
+                        <p class="result-caption">
+                            Figure 1. Seasonal revenue,
+                            quantity, cost and profit.
+                            Financial values in USD millions.
+                        </p>
+
+                    </div>
+
+                    <div class="insight-box">
+
+                        <h4>Key Findings</h4>
+
+                        <ul>
+                            <li>
+                                <strong>2021–2022:</strong>
+                                $7.09M revenue,
+                                $1.64M cost,
+                                and $5.45M profit.
+                            </li>
+
+                            <li>
+                                <strong>2019–2020:</strong>
+                                Highest seasonal revenue
+                                at $7.18M.
+                            </li>
+
+                            <li>
+                                <strong>2020–2021:</strong>
+                                Lowest revenue among
+                                the four complete seasons
+                                at $6.95M.
+                            </li>
+
+                            <li>
+                                Profitability remained
+                                around 77% of revenue
+                                across the analyzed seasons.
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </article>
+
+                <!-- ==========================
+                     QUERY 3
+                ========================== -->
+                <article class="sql-item">
+
+                    <p class="sql-number">SQL Query 03</p>
+
+                    <h3>Year-over-Year Revenue Growth</h3>
+
+                    <h4>Objective</h4>
+
+                    <p>
+                        Compare each Christmas season
+                        with the previous season to
+                        measure revenue growth
+                        or decline.
+                    </p>
+
+                    <h4>SQL Implementation</h4>
+
+                    <p>
+                        Used a CTE to aggregate sales
+                        by year and a self-JOIN
+                        to match each season
+                        with its preceding season.
+
+                        Calculated growth as the
+                        percentage change in revenue.
+                    </p>
+
+                    <pre class="sql-code"><code>;WITH s AS (
+    SELECT
+        xmas_year,
+        xmas_season,
+        SUM(total_sales) AS sales
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY
+        xmas_year,
+        xmas_season
+)
+
+SELECT
+    s.xmas_year,
+    s.xmas_season,
+
+    ROUND(s.sales / POWER(10.0, 6), 2)
+        AS sales,
+
+    ROUND(prev.sales / POWER(10.0, 6), 2)
+        AS sales_prev_season,
+
+    ROUND(
+        (s.sales - prev.sales) /
+        NULLIF(prev.sales, 0),
+        3
+    ) AS growth_yoy
+
+FROM s
+
+JOIN s prev
+    ON s.xmas_year = prev.xmas_year + 1
+
+ORDER BY s.xmas_year;</code></pre>
+
+                    <div class="result-image">
+
+                        <a href="images/sql3.png"
+                           target="_blank"
+                           rel="noopener noreferrer">
+
+                            <img src="images/sql3.png"
+                                 alt="Christmas revenue growth by season"
+                                 loading="lazy" />
+                        </a>
+
+                        <p class="result-caption">
+                            Figure 2. Year-over-year
+                            Christmas season revenue growth.
+                        </p>
+
+                    </div>
+
+                    <div class="insight-box">
+
+                        <h4>Key Findings</h4>
+
+                        <ul>
+                            <li>
+                                2019–2020:
+                                Revenue increased
+                                approximately 1.5%.
+                            </li>
+
+                            <li>
+                                2020–2021:
+                                Revenue declined
+                                approximately 3.2%.
+                            </li>
+
+                            <li>
+                                2021–2022:
+                                Revenue recovered
+                                approximately 1.9%.
+                            </li>
+
+                            <li>
+                                Sales recovered in the
+                                most recent season,
+                                but remained slightly below
+                                the 2019–2020 peak.
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </article>
+
+                <!-- ==========================
+                     QUERY 4
+                ========================== -->
+                <article class="sql-item">
+
+                    <p class="sql-number">SQL Query 04</p>
+
+                    <h3>Sales Channel Performance</h3>
+
+                    <h4>Objective</h4>
+
+                    <p>
+                        Determine revenue contribution
+                        from In-store, Online,
+                        and Christmas Market channels
+                        for each Christmas season.
+                    </p>
+
+                    <h4>SQL Implementation</h4>
+
+                    <p>
+                        Created two CTEs:
+                        one for total seasonal revenue
+                        and another for revenue
+                        by purchase channel.
+
+                        Joined the results to calculate
+                        each channel's seasonal
+                        revenue contribution.
+                    </p>
+
+                    <pre class="sql-code"><code>;WITH xmas_season_sales AS (
+    SELECT
+        xmas_year,
+        xmas_season,
+        SUM(total_sales) AS sales
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY
+        xmas_year,
+        xmas_season
+),
+
+s AS (
+    SELECT
+        xmas_year,
+        purchase_type,
+        SUM(total_sales) AS sales
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY
+        xmas_year,
+        purchase_type
+)
+
+SELECT
+    x.xmas_year,
+    x.xmas_season,
+    s.purchase_type,
+
+    ROUND(s.sales / POWER(10.0, 6), 2)
+        AS sales,
+
+    ROUND(x.sales / POWER(10.0, 6), 2)
+        AS total_sales,
+
+    ROUND(
+        s.sales / NULLIF(x.sales, 0),
+        3
+    ) AS sales_ratio
+
+FROM s
+
+JOIN xmas_season_sales x
+    ON s.xmas_year = x.xmas_year
+
+ORDER BY
+    x.xmas_year,
+    s.purchase_type;</code></pre>
+
+                    <div class="result-image">
+
+                        <a href="images/sql4.png"
+                           target="_blank"
+                           rel="noopener noreferrer">
+
+                            <img src="images/sql4.png"
+                                 alt="Purchase channel revenue proportions"
+                                 loading="lazy" />
+                        </a>
+
+                        <p class="result-caption">
+                            Figure 3. Channel revenue
+                            and seasonal market share.
+                        </p>
+
+                    </div>
+
+                    <div class="insight-box">
+
+                        <h4>Key Findings</h4>
+
+                        <ul>
+                            <li>
+                                In-store sales contributed
+                                approximately 63–67%
+                                of seasonal revenue.
+                            </li>
+
+                            <li>
+                                In 2021–2022,
+                                In-store revenue reached
+                                $4.76M, or 67.2%.
+                            </li>
+
+                            <li>
+                                Online revenue accounted
+                                for approximately 16–19%
+                                across seasons.
+                            </li>
+
+                            <li>
+                                Christmas Market sales
+                                represented approximately
+                                17–18%.
+                            </li>
+                        </ul>
+
+                        <p>
+                            <strong>Recommendation:</strong>
+                            Prioritize store operations
+                            while evaluating opportunities
+                            to expand online sales
+                            and diversify revenue channels.
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <!-- ==========================
+                     QUERY 5
+                ========================== -->
+                <article class="sql-item">
+
+                    <p class="sql-number">SQL Query 05</p>
+
+                    <h3>Geographic Revenue Analysis</h3>
+
+                    <h4>Objective</h4>
+
+                    <p>
+                        Identify the highest-revenue
+                        countries and cities
+                        across the analyzed dataset.
+                    </p>
+
+                    <h4>SQL Implementation</h4>
+
+                    <p>
+                        Used GROUP BY and SUM
+                        to aggregate sales
+                        at country and city levels.
+
+                        Sorted the results
+                        to identify major markets.
+                    </p>
+
+                    <pre class="sql-code"><code>-- Revenue by country
+
+SELECT
+    country,
+
+    ROUND(
+        SUM(total_sales) / POWER(10.0, 6),
+        2
+    ) AS sales
+
+FROM dbo.v_xmas_sales
+
+GROUP BY country
+
+ORDER BY sales DESC;
+
+
+-- Revenue by city
+
+SELECT
+    country,
+    city,
+
+    ROUND(
+        SUM(total_sales) / POWER(10.0, 6),
+        2
+    ) AS sales
+
+FROM dbo.v_xmas_sales
+
+GROUP BY
+    country,
+    city
+
+ORDER BY
+    country,
+    sales DESC;</code></pre>
+
+                    <div class="results-grid">
+
+                        <div class="result-image">
+                            <a href="images/sql5-1.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql5-1.png"
+                                     alt="Sales by country"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Revenue by country.
+                            </p>
+                        </div>
+
+                        <div class="result-image">
+                            <a href="images/sql5-2.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql5-2.png"
+                                     alt="Sales by city"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Revenue by city.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="insight-box">
+
+                        <h4>Key Findings</h4>
+
+                        <ul>
+                            <li>
+                                Sweden generated $3.78M,
+                                the highest cumulative
+                                country revenue.
+                            </li>
+
+                            <li>
+                                Netherlands followed
+                                closely at $3.77M.
+                            </li>
+
+                            <li>
+                                Germany generated $3.70M,
+                                and the United Kingdom
+                                generated $3.63M.
+                            </li>
+
+                            <li>
+                                Within Germany,
+                                Munich and Berlin
+                                each generated about
+                                $0.96M.
+                            </li>
+                        </ul>
+
+                        <p>
+                            <strong>Recommendation:</strong>
+                            Use market-level revenue
+                            comparisons to guide
+                            geographic planning
+                            and market prioritization.
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <!-- ==========================
+                     QUERY 6
+                ========================== -->
+                <article class="sql-item">
+
+                    <p class="sql-number">SQL Query 06</p>
+
+                    <h3>Country-Level Revenue Growth</h3>
+
+                    <h4>Objective</h4>
+
+                    <p>
+                        Compare revenue growth
+                        across countries in the
+                        latest Christmas season
+                        to identify expanding
+                        and declining markets.
+                    </p>
+
+                    <h4>SQL Implementation</h4>
+
+                    <p>
+                        Aggregated sales by season
+                        and country using a CTE.
+
+                        Used a self-JOIN
+                        to compare the latest season
+                        with the previous year
+                        for the same country.
+                    </p>
+
+                    <pre class="sql-code"><code>;WITH s AS (
+    SELECT
+        xmas_year,
+        xmas_season,
+        country,
+        SUM(total_sales) AS sales
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY
+        xmas_year,
+        xmas_season,
+        country
+)
+
+SELECT
+    s.xmas_year,
+    s.xmas_season,
+    s.country,
+
+    ROUND(
+        s.sales / POWER(10.0, 6),
+        2
+    ) AS sales,
+
+    ROUND(
+        prev.sales / POWER(10.0, 6),
+        2
+    ) AS prev_sales,
+
+    (s.sales - prev.sales) /
+    NULLIF(prev.sales, 0)
+        AS sales_growth_percentage
+
+FROM s
+
+LEFT JOIN s prev
+    ON s.xmas_year = prev.xmas_year + 1
+    AND s.country = prev.country
+
+WHERE s.xmas_year = (
+    SELECT MAX(xmas_year)
+    FROM dbo.v_xmas_sales
+)
+
+ORDER BY s.sales DESC;</code></pre>
+
+                    <div class="result-image">
+
+                        <a href="images/sql6.png"
+                           target="_blank"
+                           rel="noopener noreferrer">
+
+                            <img src="images/sql6.png"
+                                 alt="Country sales growth in latest season"
+                                 loading="lazy" />
+                        </a>
+
+                        <p class="result-caption">
+                            Figure 5. Latest season
+                            revenue by country
+                            and year-over-year growth.
+                        </p>
+
+                    </div>
+
+                    <div class="insight-box">
+
+                        <h4>Key Findings</h4>
+
+                        <ul>
+                            <li>
+                                Germany led the latest
+                                season with approximately
+                                $0.94M revenue.
+                            </li>
+
+                            <li>
+                                Austria recorded
+                                approximately 12.38%
+                                revenue growth.
+                            </li>
+
+                            <li>
+                                United Kingdom revenue
+                                increased about 11.75%.
+                            </li>
+
+                            <li>
+                                Poland increased about 8.09%.
+                            </li>
+
+                            <li>
+                                France declined 8.37%,
+                                while Sweden declined 6.18%.
+                            </li>
+                        </ul>
+
+                        <p>
+                            <strong>Recommendation:</strong>
+                            Investigate revenue weakness
+                            in declining markets
+                            while reviewing the drivers
+                            of growth in Austria
+                            and the United Kingdom.
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <!-- ==========================
+                     QUERY 7
+                ========================== -->
+                <article class="sql-item">
+
+                    <p class="sql-number">SQL Query 07</p>
+
+                    <h3>Customer & Channel Segmentation</h3>
+
+                    <h4>Objective</h4>
+
+                    <p>
+                        Evaluate revenue distribution
+                        by customer age group,
+                        gender, and purchase channel
+                        to understand the composition
+                        of holiday sales.
+                    </p>
+
+                    <h4>SQL Implementation</h4>
+
+                    <p>
+                        Used SUM and GROUP BY
+                        to calculate total revenue
+                        for each customer segment.
+
+                        Divided segment revenue
+                        by overall revenue
+                        to determine its contribution.
+                    </p>
+
+                    <pre class="sql-code"><code>-- Revenue by age group
+
+SELECT
+    customer_age_tange,
+    SUM(total_sales) AS sales,
+
+    SUM(total_sales) * 1.0 /
+    NULLIF(
+        (SELECT SUM(total_sales)
+         FROM dbo.v_xmas_sales),
+        0
+    ) AS sales_proportion
+
+FROM dbo.v_xmas_sales
+
+GROUP BY customer_age_tange;
+
+
+-- Revenue by gender
+
+SELECT
+    gender,
+    SUM(total_sales) AS sales,
+
+    SUM(total_sales) * 1.0 /
+    NULLIF(
+        (SELECT SUM(total_sales)
+         FROM dbo.v_xmas_sales),
+        0
+    ) AS sales_proportion
+
+FROM dbo.v_xmas_sales
+
+GROUP BY gender
+ORDER BY gender;
+
+
+-- Revenue by purchase channel
+
+SELECT
+    purchase_type,
+    SUM(total_sales) AS sales,
+
+    ROUND(
+        SUM(total_sales) * 1.0 /
+        NULLIF(
+            (SELECT SUM(total_sales)
+             FROM dbo.v_xmas_sales),
+            0
+        ),
+        3
+    ) AS sales_proportion
+
+FROM dbo.v_xmas_sales
+
+GROUP BY purchase_type
+ORDER BY purchase_type;</code></pre>
+
+                    <div class="results-grid">
+
+                        <div class="result-image">
+                            <a href="images/sql7-1.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql7-1.png"
+                                     alt="Sales by age group"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Revenue by age group.
+                            </p>
+                        </div>
+
+                        <div class="result-image">
+                            <a href="images/sql7-2.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql7-2.png"
+                                     alt="Revenue by gender"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Revenue by gender.
+                            </p>
+                        </div>
+
+                        <div class="result-image">
+                            <a href="images/sql7-3.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql7-3.png"
+                                     alt="Overall purchase channel share"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Revenue by purchase channel.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="insight-box">
+
+                        <h4>Key Findings</h4>
+
+                        <ul>
+                            <li>
+                                Ages 1–11 accounted for
+                                approximately 38.85%
+                                of total revenue.
+                            </li>
+
+                            <li>
+                                Ages 12–17 generated
+                                approximately 30.85%.
+                            </li>
+
+                            <li>
+                                Ages 18+ contributed
+                                approximately 30.30%.
+                            </li>
+
+                            <li>
+                                Female customers contributed
+                                50.57% of revenue,
+                                versus 49.43% for males.
+                            </li>
+
+                            <li>
+                                In-store represented 64.7%
+                                of total revenue,
+                                compared with Online at 17.8%
+                                and Christmas Market at 17.5%.
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </article>
+
+                <!-- ==========================
+                     QUERY 8
+                ========================== -->
+                <article class="sql-item">
+
+                    <p class="sql-number">SQL Query 08</p>
+
+                    <h3>Purchasing & Payment Behavior by Age</h3>
+
+                    <h4>Objective</h4>
+
+                    <p>
+                        Identify how purchase channels
+                        and payment methods differ
+                        between customer age groups.
+                    </p>
+
+                    <h4>SQL Implementation</h4>
+
+                    <p>
+                        Used CTEs to calculate
+                        total revenue by age group
+                        and revenue by age group
+                        combined with each
+                        purchase or payment method.
+
+                        Joined these results
+                        to calculate within-group
+                        proportions.
+                    </p>
+
+                    <pre class="sql-code"><code>-- Purchase channel by age group
+
+;WITH t AS (
+    SELECT
+        customer_age_tange,
+        SUM(total_sales) AS sales
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY customer_age_tange
+),
+
+s AS (
+    SELECT
+        customer_age_tange,
+        purchase_type,
+        SUM(total_sales) AS sales
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY
+        customer_age_tange,
+        purchase_type
+)
+
+SELECT
+    s.customer_age_tange,
+    s.purchase_type,
+
+    ROUND(s.sales / POWER(10.0, 6), 2)
+        AS sales,
+
+    ROUND(t.sales / POWER(10.0, 6), 2)
+        AS total_sales,
+
+    ROUND(
+        s.sales / NULLIF(t.sales, 0),
+        3
+    ) AS sales_proportion
+
+FROM s
+
+LEFT JOIN t
+    ON s.customer_age_tange = t.customer_age_tange
+
+ORDER BY
+    s.customer_age_tange,
+    s.purchase_type;
+
+
+-- Payment method by age group
+
+;WITH t AS (
+    SELECT
+        customer_age_tange,
+        SUM(total_sales) AS sales
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY customer_age_tange
+),
+
+s AS (
+    SELECT
+        customer_age_tange,
+        payment_method,
+        SUM(total_sales) AS sales
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY
+        customer_age_tange,
+        payment_method
+)
+
+SELECT
+    s.customer_age_tange,
+    s.payment_method,
+
+    ROUND(s.sales / POWER(10.0, 6), 2)
+        AS sales,
+
+    ROUND(t.sales / POWER(10.0, 6), 2)
+        AS total_sales,
+
+    ROUND(
+        s.sales / NULLIF(t.sales, 0),
+        3
+    ) AS sales_proportion
+
+FROM s
+
+LEFT JOIN t
+    ON s.customer_age_tange = t.customer_age_tange
+
+ORDER BY
+    s.customer_age_tange,
+    s.payment_method;</code></pre>
+
+                    <div class="results-grid">
+
+                        <div class="result-image">
+                            <a href="images/sql8-1.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql8-1.png"
+                                     alt="Purchase channel by age"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Purchase channel by age group.
+                            </p>
+                        </div>
+
+                        <div class="result-image">
+                            <a href="images/sql8-2.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql8-2.png"
+                                     alt="Payment method by age"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Payment method by age group.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="insight-box">
+
+                        <h4>Key Findings</h4>
+
+                        <ul>
+                            <li>
+                                Ages 1–11 generated 74.4%
+                                of their revenue
+                                through In-store purchases.
+                            </li>
+
+                            <li>
+                                Ages 12–17 generated
+                                58.7% through In-store.
+                            </li>
+
+                            <li>
+                                Ages 18+ generated
+                                58.3% through In-store.
+                            </li>
+
+                            <li>
+                                Within ages 1–11,
+                                Cash accounted for 86.2%
+                                of group revenue.
+                            </li>
+
+                            <li>
+                                For ages 18+,
+                                Credit Card represented 32.1%,
+                                followed by PayPal at 23.1%.
+                            </li>
+                        </ul>
+
+                        <p>
+                            <strong>Recommendation:</strong>
+                            Maintain strong in-store
+                            checkout capabilities while
+                            supporting multiple digital
+                            payment methods for older
+                            customer groups.
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <!-- ==========================
+                     QUERY 9
+                ========================== -->
+                <article class="sql-item">
+
+                    <p class="sql-number">SQL Query 09</p>
+
+                    <h3>Product Category Performance</h3>
+
+                    <h4>Objective</h4>
+
+                    <p>
+                        Evaluate revenue contribution,
+                        average product prices,
+                        and profitability
+                        across product categories.
+                    </p>
+
+                    <h4>SQL Implementation</h4>
+
+                    <p>
+                        Used GROUP BY and aggregation
+                        functions to calculate category
+                        revenue, units sold,
+                        average prices, and
+                        profit-to-revenue ratios.
+
+                        Extended the analysis
+                        to individual products
+                        within each category.
+                    </p>
+
+                    <pre class="sql-code"><code>-- Product category analysis
+
+;WITH s AS (
+    SELECT
+        product_category,
+        SUM(total_sales) AS sales,
+        AVG(unit_price) AS avg_unit_price,
+        SUM(profit) AS profit,
+
+        SUM(profit) /
+        NULLIF(SUM(total_sales), 0)
+            AS profit_ratio
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY product_category
+)
+
+SELECT
+    product_category,
+
+    ROUND(sales / POWER(10.0, 6), 2)
+        AS sales,
+
+    ROUND(
+        sales /
+        NULLIF(
+            (SELECT SUM(total_sales)
+             FROM dbo.v_xmas_sales),
+            0
+        ),
+        3
+    ) AS sales_proportion,
+
+    ROUND(avg_unit_price, 2)
+        AS avg_unit_price,
+
+    ROUND(profit_ratio, 4)
+        AS profit_ratio
+
+FROM s
+ORDER BY product_category;
+
+
+-- Product-level analysis
+
+;WITH s AS (
+    SELECT
+        product_category,
+        product_name,
+        SUM(total_sales) AS sales,
+        SUM(quantity) AS quantity,
+        MIN(unit_price) AS min_unit_price,
+        MAX(unit_price) AS max_unit_price,
+        AVG(unit_price) AS avg_unit_price,
+
+        SUM(profit) /
+        NULLIF(SUM(total_sales), 0)
+            AS profit_ratio
+
+    FROM dbo.v_xmas_sales
+
+    GROUP BY
+        product_category,
+        product_name
+)
+
+SELECT
+    product_category,
+    product_name,
+
+    ROUND(sales / POWER(10.0, 6), 2)
+        AS sales,
+
+    quantity,
+    ROUND(min_unit_price, 2) AS min_unit_price,
+    ROUND(max_unit_price, 2) AS max_unit_price,
+    ROUND(avg_unit_price, 2) AS avg_unit_price,
+    ROUND(profit_ratio, 4) AS profit_ratio
+
+FROM s
+
+ORDER BY
+    product_category,
+    product_name;</code></pre>
+
+                    <div class="results-grid">
+
+                        <div class="result-image">
+                            <a href="images/sql9-1.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql9-1.png"
+                                     alt="Product category revenue analysis"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Product category summary.
+                            </p>
+                        </div>
+
+                        <div class="result-image">
+                            <a href="images/sql9-2.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql9-2.png"
+                                     alt="Product-level sales results"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Product-level aggregation.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="insight-box">
+
+                        <h4>Key Findings</h4>
+
+                        <ul>
+                            <li>
+                                Toys generated approximately
+                                $4.46M, representing
+                                15.8% of total revenue.
+                            </li>
+
+                            <li>
+                                Clothing generated $3.22M,
+                                or 11.4%.
+                            </li>
+
+                            <li>
+                                Accessories generated $2.81M,
+                                approximately 9.9%.
+                            </li>
+
+                            <li>
+                                Books contributed $2.66M,
+                                or 9.4%.
+                            </li>
+
+                            <li>
+                                Category-level profit ratios
+                                were relatively consistent,
+                                generally around 76.8–77.0%.
+                            </li>
+                        </ul>
+
+                        <p>
+                            <strong>Recommendation:</strong>
+                            Prioritize inventory planning
+                            for high-revenue product
+                            categories while evaluating
+                            category-level demand
+                            and profitability.
+                        </p>
+
+                    </div>
+
+                   
+
+                </article>
+
+                <!-- ==========================
+                     QUERY 10
+                ========================== -->
+                <article class="sql-item">
+
+                    <p class="sql-number">SQL Query 10</p>
+
+                    <h3>Customer Shopping Time Patterns</h3>
+
+                    <h4>Objective</h4>
+
+                    <p>
+                        Identify the days and hours
+                        with the highest transaction
+                        activity to support
+                        staffing and operational planning.
+                    </p>
+
+                    <h4>SQL Implementation</h4>
+
+                    <p>
+                        Used DATEPART-derived weekday
+                        and hour fields with COUNT(*)
+                        and GROUP BY to analyze
+                        shopping activity patterns.
+                    </p>
+
+                    <pre class="sql-code"><code>-- Activity by gender and weekday
+
+SELECT
+    gender,
+    weekday,
+    weekday_name,
+
+    COUNT(*) AS nb_orders
+
+FROM dbo.v_xmas_sales
+
+GROUP BY
+    gender,
+    weekday,
+    weekday_name
+
+ORDER BY
+    gender,
+    weekday;
+
+
+-- Activity by hour
+
+SELECT
+    [hour],
+
+    COUNT(*) AS nb_orders
+
+FROM dbo.v_xmas_sales
+
+GROUP BY [hour]
+
+ORDER BY [hour];</code></pre>
+
+                    <div class="results-grid">
+
+                        <div class="result-image">
+                            <a href="images/sql10-1.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql10-1.png"
+                                     alt="Activity by weekday and gender"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Transaction rows by
+                                weekday and gender.
+                            </p>
+                        </div>
+
+                        <div class="result-image">
+                            <a href="images/sql10-2.png"
+                               target="_blank"
+                               rel="noopener noreferrer">
+
+                                <img src="images/sql10-2.png"
+                                     alt="Transaction counts by hour"
+                                     loading="lazy" />
+                            </a>
+
+                            <p class="result-caption">
+                                Transaction rows by hour.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="insight-box">
+
+                        <h4>Key Findings</h4>
+
+                        <ul>
+                            <li>
+                                <strong>3 PM:</strong>
+                                Highest observed activity
+                                with 3,131 rows.
+                            </li>
+
+                            <li>
+                                <strong>6 PM:</strong>
+                                3,105 rows,
+                                another busy period.
+                            </li>
+
+                            <li>
+                                <strong>11 AM:</strong>
+                                3,070 rows.
+                            </li>
+
+                            <li>
+                                Female Saturday activity:
+                                2,894 rows;
+                                female Monday activity:
+                                2,917 rows.
+                            </li>
+
+                            <li>
+                                Activity is generally
+                                concentrated during
+                                daytime and early evening.
+                            </li>
+                        </ul>
+
+                        <p>
+                            <strong>Recommendation:</strong>
+                            Consider higher staffing
+                            and checkout capacity
+                            during busy shopping hours,
+                            particularly the afternoon.
+                        </p>
+
+                    </div>
+
+                   
+
+                </article>
+
+            </section>
+
+            <!-- ==========================
+                 TECHNICAL IMPACT
+            ========================== -->
+            <section>
+
+                <header class="major">
+                    <h2>Technical Impact & Business Value</h2>
+                </header>
+
+                <p>
+                    This project demonstrates how
+                    SQL can transform raw sales
+                    transactions into structured
+                    analytical results across
+                    time, geography, sales channels,
+                    product categories, and
+                    customer behavior.
+                </p>
+
+                <div class="impact-grid">
+
+                    <div class="impact-card">
+                        <span class="icon solid fa-database"></span>
+
+                        <h3>Reusable SQL Analysis</h3>
+
+                        <p>
+                            Used CTEs, aggregations,
+                            self-JOINs, and date
+                            transformations to build
+                            repeatable queries for
+                            comparing multiple
+                            holiday seasons.
+                        </p>
+                    </div>
+
+                    <div class="impact-card">
+                        <span class="icon solid fa-chart-line"></span>
+
+                        <h3>Performance Monitoring</h3>
+
+                        <p>
+                            Measured revenue,
+                            profit, cost,
+                            and seasonal growth
+                            to identify performance
+                            changes and potential
+                            areas for investigation.
+                        </p>
+                    </div>
+
+                    <div class="impact-card">
+                        <span class="icon solid fa-shopping-cart"></span>
+
+                        <h3>Sales & Product Insights</h3>
+
+                        <p>
+                            Identified leading
+                            purchase channels,
+                            geographic markets,
+                            and product categories
+                            to inform potential
+                            sales and inventory
+                            planning decisions.
+                        </p>
+                    </div>
+
+                    <div class="impact-card">
+                        <span class="icon solid fa-users"></span>
+
+                        <h3>Customer Behavior Analysis</h3>
+
+                        <p>
+                            Examined purchasing
+                            behavior by age,
+                            gender, payment method,
+                            channel, weekday,
+                            and hour to support
+                            operational and
+                            marketing analysis.
+                        </p>
+                    </div>
+
+                </div>
+
+                <h3>Overall Findings</h3>
+
+                <ul>
+                    <li>
+                        The latest Christmas season
+                        recovered by approximately
+                        1.9% after a 3.2% decline
+                        in the preceding season.
+                    </li>
+
+                    <li>
+                        In-store remained the
+                        dominant sales channel,
+                        contributing nearly
+                        two-thirds of revenue.
+                    </li>
+
+                    <li>
+                        Toys, Clothing, and Accessories
+                        were among the strongest
+                        product categories.
+                    </li>
+
+                    <li>
+                        Revenue varied across markets,
+                        with some countries showing
+                        growth while others declined.
+                    </li>
+
+                    <li>
+                        Customer age and purchase method
+                        influenced channel usage,
+                        while transaction activity
+                        varied by time of day.
+                    </li>
+                </ul>
+
+                <h3>Project Conclusion</h3>
+
+                <p>
+                    Through this project, I strengthened
+                    my SQL Server skills in data
+                    aggregation, CTEs, joins,
+                    conditional transformations,
+                    time-based analysis, and
+                    business performance reporting.
+
+                    The resulting analytical queries
+                    provide a repeatable foundation
+                    for monitoring sales performance,
+                    identifying revenue drivers,
+                    understanding customer behavior,
+                    and supporting business
+                    decision-making.
+
+                    The project demonstrates how
+                    structured SQL analysis can
+                    translate transaction-level
+                    records into measurable,
+                    actionable business insights.
+                </p>
+
+                <!-- BUTTONS -->
+                <div class="project-actions">
+
+                    <a
+                        href="https://github.com/Nukeoov/Xmas_Gift_Sales_Analysis_SQL"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button primary icon brands fa-github">
+                        View GitHub Repository
+                    </a>
+
+                    <a
+                        href="My Projects.html"
+                        class="button icon solid fa-arrow-left">
+                        Back to My Projects
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+
+    <!-- ==========================
+         SIDEBAR
+    ========================== -->
+    <div id="sidebar">
+        <div class="inner">
+
+            <nav id="menu">
+                <header class="major">
+                    <h2>Menu</h2>
+                </header>
+
+                <ul>
+                    <li>
+                        <a href="index.html">Homepage</a>
+                    </li>
+                    <li>
+                        <a href="My Certificates.html">
+                            My Certificates
+                        </a>
+                    </li>
+                    <li>
+                        <a href="My Projects.html">
+                            My Projects
+                        </a>
+                    </li>
+                    <li>
+                        <a href="My Resume.html">
+                            My Resume
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <section>
+                <header class="major">
+                    <h2>Get in touch</h2>
+                </header>
+
+                <ul class="contact">
+
+                    <li class="icon solid fa-envelope">
+                        <a href="mailto:khoinuko@gmail.com">
+                            khoinuko@gmail.com
+                        </a>
+                    </li>
+
+                    <li class="icon solid fa-phone">
+                        <a href="tel:+13465634517">
+                            (346) 563-4517
+                        </a>
+                    </li>
+
+                    <li class="icon solid fa-home">
+                        Houston, TX
+                    </li>
+
+                </ul>
+            </section>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- JAVASCRIPT -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

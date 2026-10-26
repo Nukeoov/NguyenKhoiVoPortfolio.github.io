@@ -1,145 +1,409 @@
+
 <!DOCTYPE HTML>
 <!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license
+    Editorial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under
+    the CCA 3.0 license (html5up.net/license)
 -->
-<html>
-	<head>
-		<title>Nguyen Khoi Vo</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
 
-		<!-- Resume Custom CSS -->
-		<style>
-			.resume-container {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				width: 100%;
-			}
+<html lang="en">
 
-			.resume-pdf {
-				width: 80%;
-				max-width: 900px;
-				height: 900px;
-				border: none;
-			}
+<head>
+    <title>My Resume | Nguyen Khoi Vo</title>
 
-			.resume-actions {
-				margin-top: 1.5rem;
-			}
+    <meta charset="utf-8" />
 
-			.resume-actions a {
-				display: inline-block;
-				padding: 12px 22px;
-				background-color: #2c2c2c;
-				color: #ffffff;
-				text-decoration: none;
-				border-radius: 6px;
-				font-weight: 600;
-			}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    />
 
-			.resume-actions a:hover {
-				background-color: #444;
-			}
-		</style>
-	</head>
+    <meta
+        name="description"
+        content="Resume of Nguyen Khoi Vo, a Mathematics
+        and Finance student at the University of Houston
+        pursuing opportunities in Data Analytics,
+        Business Analytics, and Business Intelligence."
+    />
 
-	<body class="is-preload">
+    <link rel="stylesheet" href="assets/css/main.css" />
 
-		<!-- Wrapper -->
-		<div id="wrapper">
+    <!-- Custom CSS -->
+    <style>
 
-			<!-- Main -->
-			<div id="main">
-				<div class="inner">
+        /* ==============================
+           RESUME CONTAINER
+        ============================== */
 
-					<!-- Header -->
-					<header id="header">
-						<a href="index.html" class="logo"><strong>Nguyen Khoi Vo</strong> Portfolio</a>
-						<ul class="icons">
-							<li><a href="https://www.facebook.com/Khoinuko2005/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="https://www.linkedin.com/in/khoivo1907/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-							<li><a href="https://github.com/dashboard" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-						</ul>
-					</header>
+        .resume-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 2rem;
+        }
 
-					<!-- Resume Section -->
-					<section>
-						<header class="major">
-							<h1>My Resume</h1>
-						</header>
+        /* ==============================
+           RESUME INTRODUCTION
+        ============================== */
 
-						<div class="resume-container">
-							<iframe
-								src="Nguyen Khoi Vo Resume Latest.pdf"
-								title="Nguyen Khoi Vo Resume"
-								class="resume-pdf">
-							</iframe>
+        .resume-intro {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
 
-							<div class="resume-actions">
-								<a href="Nguyen Khoi Vo Resume Latest.pdf" target="_blank" download>
-									Download Resume (PDF)
-								</a>
-							</div>
-						</div>
-					</section>
+        /* ==============================
+           PDF PREVIEW
+        ============================== */
 
-				</div>
-			</div>
+        .resume-preview {
+            width: 100%;
+            max-width: 900px;
+            padding: 0.75rem;
+            background: #ffffff;
 
-			<!-- Sidebar -->
-			<div id="sidebar">
-				<div class="inner">
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
 
-					<!-- Search -->
-					<section id="search" class="alt">
-						<form method="post" action="#">
-							<input type="text" name="query" id="query" placeholder="Search" />
-						</form>
-					</section>
+            box-shadow:
+                0 6px 24px rgba(0, 0, 0, 0.06);
+        }
 
-					<!-- Menu -->
-					<nav id="menu">
-						<header class="major">
-							<h2>Menu</h2>
-						</header>
-						<ul>
-							<li><a href="index.html">Homepage</a></li>
-							<li><a href="My Certificates.html">My Certificates</a></li>
-							<li><a href="My Projects.html">My Projects</a></li>
-							<li><a href="My Resume.html">My Resume</a></li>
-						</ul>
-					</nav>
+        .resume-pdf {
+            display: block;
+            width: 100%;
+            height: 1050px;
+            border: none;
+            background: #ffffff;
+        }
 
-					<!-- Contact -->
-					<section>
-						<header class="major">
-							<h2>Get in touch</h2>
-						</header>
-						<ul class="contact">
-							<li class="icon solid fa-envelope"><a href="#">khoinuko@gmail.com</a></li>
-							<li class="icon solid fa-phone">(346) 563-4517</li>
-							<li class="icon solid fa-home">
-								2828 Bammel Ln, Unit 305<br />
-								Houston, TX 77098
-							</li>
-						</ul>
-					</section>
+        /* ==============================
+           ACTION BUTTONS
+        ============================== */
 
-				</div>
-			</div>
+        .resume-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
 
-		</div>
+        .resume-actions .button {
+            margin: 0;
+        }
 
-		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<script src="assets/js/main.js"></script>
+        /* ==============================
+           RESUME NOTE
+        ============================== */
 
-	</body>
+        .resume-note {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #7f888f;
+            font-size: 0.9rem;
+        }
+
+        /* ==============================
+           TABLET
+        ============================== */
+
+        @media (max-width: 980px) {
+
+            .resume-pdf {
+                height: 850px;
+            }
+
+        }
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 736px) {
+
+            .resume-container {
+                margin-top: 1.25rem;
+            }
+
+            .resume-preview {
+                padding: 0.25rem;
+            }
+
+            .resume-pdf {
+                height: 550px;
+            }
+
+            .resume-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .resume-actions .button {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="is-preload">
+
+    <!-- WRAPPER -->
+    <div id="wrapper">
+
+
+        <!-- ==============================
+             MAIN CONTENT
+        ============================== -->
+
+        <div id="main">
+
+            <div class="inner">
+
+
+                <!-- HEADER -->
+                <header id="header">
+
+                    <a href="index.html" class="logo">
+                        <strong>Nguyen Khoi Vo</strong> Portfolio
+                    </a>
+
+                    <ul class="icons">
+
+                        <!-- Facebook -->
+                        <li>
+                            <a
+                                href="https://www.facebook.com/Khoinuko2005/"
+                                class="icon brands fa-facebook-f"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <span class="label">Facebook</span>
+                            </a>
+                        </li>
+
+                        <!-- LinkedIn -->
+                        <li>
+                            <a
+                                href="https://www.linkedin.com/in/khoivo1907/"
+                                class="icon brands fa-linkedin"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <span class="label">LinkedIn</span>
+                            </a>
+                        </li>
+
+                        <!-- GitHub -->
+                        <li>
+                            <a
+                                href="https://github.com/Nukeoov"
+                                class="icon brands fa-github"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <span class="label">GitHub</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </header>
+
+
+                <!-- ==============================
+                     MY RESUME
+                ============================== -->
+
+                <section>
+
+                    <header class="major">
+                        <h1>My Resume</h1>
+                    </header>
+
+
+                    <!-- INTRODUCTION -->
+                    <div class="resume-intro">
+
+                    </div>
+
+
+                    <!-- RESUME CONTAINER -->
+                    <div class="resume-container">
+
+
+                        <!-- PDF PREVIEW -->
+                        <div class="resume-preview">
+
+                            <iframe
+                                src="Nguyen_Khoi_Vo_Resume.pdf#toolbar=0"
+                                title="Nguyen Khoi Vo Resume"
+                                class="resume-pdf"
+                            >
+                            </iframe>
+
+                        </div>
+
+
+                        <!-- ACTION BUTTONS -->
+                        <div class="resume-actions">
+
+
+                            <!-- DOWNLOAD RESUME -->
+                            <a
+                                href="Nguyen_Khoi_Vo_Resume.pdf"
+                                download="Nguyen_Khoi_Vo_Resume.pdf"
+                                class="button primary icon solid fa-download"
+                            >
+                                Download Resume (PDF)
+                            </a>
+
+
+                            <!-- VIEW FULL SCREEN -->
+                            <a
+                                href="Nguyen_Khoi_Vo_Resume.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="button icon solid fa-external-link-alt"
+                            >
+                                View Full Screen
+                            </a>
+
+
+                        </div>
+
+
+                       
+                    </div>
+
+                </section>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==============================
+             SIDEBAR
+        ============================== -->
+
+        <div id="sidebar">
+
+            <div class="inner">
+
+
+                <!-- MENU -->
+                <nav id="menu">
+
+                    <header class="major">
+                        <h2>Menu</h2>
+                    </header>
+
+                    <ul>
+
+                        <li>
+                            <a href="index.html">
+                                Homepage
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="My Certificates.html">
+                                My Certificates
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="My Projects.html">
+                                My Projects
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="My Resume.html">
+                                My Resume
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </nav>
+
+
+
+                <!-- GET IN TOUCH -->
+                <section>
+
+                    <header class="major">
+                        <h2>Get in touch</h2>
+                    </header>
+
+                    <ul class="contact">
+
+
+                        <!-- EMAIL -->
+                        <li class="icon solid fa-envelope">
+
+                            <a href="mailto:khoinuko@gmail.com">
+                                khoinuko@gmail.com
+                            </a>
+
+                        </li>
+
+
+                        <!-- PHONE -->
+                        <li class="icon solid fa-phone">
+
+                            <a href="tel:+13465634517">
+                                (346) 563-4517
+                            </a>
+
+                        </li>
+
+
+                        <!-- LOCATION -->
+                        <li class="icon solid fa-home">
+                            Houston, TX
+                        </li>
+
+
+                    </ul>
+
+                </section>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ==============================
+         JAVASCRIPT
+    ============================== -->
+
+    <script src="assets/js/jquery.min.js"></script>
+
+    <script src="assets/js/browser.min.js"></script>
+
+    <script src="assets/js/breakpoints.min.js"></script>
+
+    <script src="assets/js/util.js"></script>
+
+    <script src="assets/js/main.js"></script>
+
+
+</body>
 </html>

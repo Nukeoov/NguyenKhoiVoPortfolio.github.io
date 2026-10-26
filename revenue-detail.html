@@ -1,0 +1,1686 @@
+
+<!DOCTYPE HTML>
+<!--
+    Editorial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under
+    the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en">
+
+<head>
+    <title>Revenue Analysis Dashboard | Nguyen Khoi Vo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1" />
+    <meta name="description"
+          content="Power BI Revenue Analysis Dashboard by Nguyen Khoi Vo. Revenue KPIs, sales targets, DAX, time intelligence, data modeling and business insights." />
+
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <style>
+        /* ==========================
+           GENERAL PROJECT STYLING
+        ========================== */
+        :root {
+            --accent: #f56a6a;
+            --navy: #4c5f8e;
+            --light: #f5f6f7;
+            --border: #e0e4e7;
+            --muted: #7f888f;
+        }
+
+        .project-label {
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-overview {
+            max-width: 1050px;
+            line-height: 1.85;
+        }
+
+        .section-intro {
+            max-width: 1050px;
+            margin-bottom: 1.8rem;
+        }
+
+        /* ==========================
+           FOUR SUMMARY CARDS
+        ========================== */
+        .project-summary {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .summary-card {
+            min-width: 0;
+            padding: 1.4rem;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: transform 0.25s ease,
+                        box-shadow 0.25s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        }
+
+        .summary-icon {
+            color: var(--accent);
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+        }
+
+        .summary-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.65rem;
+        }
+
+        .summary-card p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ==========================
+           DASHBOARD & MODEL IMAGES
+        ========================== */
+        .project-image {
+            margin: 2rem 0;
+        }
+
+        .project-image a {
+            display: block;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--light);
+        }
+
+        .project-image img {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .project-image a:hover img {
+            transform: scale(1.015);
+        }
+
+        .image-caption {
+            color: var(--muted);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 0.8rem;
+        }
+
+        /* ==========================
+           KPI HIGHLIGHTS
+        ========================== */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin: 1.75rem 0;
+        }
+
+        .kpi-card {
+            min-width: 0;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.4rem 0.8rem;
+            background: #fff;
+        }
+
+        .kpi-value {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1.2;
+            margin-bottom: 0.55rem;
+        }
+
+        .kpi-value.negative {
+            color: #e55353;
+        }
+
+        .kpi-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* ==========================
+           ANALYSIS & INSIGHTS
+        ========================== */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+
+        .analysis-card {
+            min-width: 0;
+            padding: 1.7rem;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .analysis-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .analysis-card h3 .icon {
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+
+        .analysis-card li {
+            margin-bottom: 0.75rem;
+            line-height: 1.75;
+        }
+
+        .analysis-card ul:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ==========================
+           DATA MODEL HIGHLIGHTS
+        ========================== */
+        .model-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .model-highlight {
+            min-width: 0;
+            padding: 1.2rem;
+            border-left: 3px solid var(--accent);
+            background: var(--light);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .model-highlight h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .model-highlight p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* ==========================
+           DATA TABLES
+        ========================== */
+        .data-table {
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .data-table td,
+        .data-table th {
+            padding: 0.9rem;
+            vertical-align: top;
+        }
+
+        .data-table td:first-child {
+            font-family: Consolas, monospace;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .field-list {
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        /* ==========================
+           DAX CODE BLOCKS
+        ========================== */
+        .dax-item {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .dax-item h3 {
+            margin-bottom: 0.6rem;
+        }
+
+        .dax-item p {
+            margin-bottom: 1rem;
+        }
+
+        .dax-code {
+            display: block;
+            margin: 0;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            background: #202936;
+            color: #e6edf3;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            white-space: pre;
+            tab-size: 4;
+        }
+
+        .dax-code code {
+            display: block;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            white-space: inherit;
+        }
+
+        .tech-note {
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+            border-left: 3px solid var(--accent);
+            background: var(--light);
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        /* ==========================
+           IMPACT SECTION
+        ========================== */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .impact-card {
+            min-width: 0;
+            padding: 1.5rem;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .impact-card .icon {
+            display: inline-block;
+            color: var(--accent);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .impact-card h3 {
+            margin-bottom: 0.65rem;
+        }
+
+        .impact-card p {
+            margin: 0;
+        }
+
+        /* ==========================
+           BUTTONS
+        ========================== */
+        .project-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .project-actions .button {
+            margin: 0;
+        }
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+        @media (max-width: 1280px) {
+            .project-summary,
+            .kpi-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 980px) {
+            .model-highlights {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 736px) {
+            .project-summary,
+            .analysis-grid,
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-card,
+            .analysis-card,
+            .impact-card {
+                padding: 1.2rem;
+            }
+
+            .dax-item {
+                padding: 1rem;
+            }
+
+            .dax-code {
+                font-size: 0.75rem;
+            }
+
+            .project-actions {
+                flex-direction: column;
+            }
+
+            .project-actions .button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="is-preload">
+
+<div id="wrapper">
+
+    <!-- ==========================
+         MAIN CONTENT
+    ========================== -->
+    <div id="main">
+        <div class="inner">
+
+            <!-- HEADER -->
+            <header id="header">
+                <a href="index.html" class="logo">
+                    <strong>Nguyen Khoi Vo</strong> Portfolio
+                </a>
+
+                <ul class="icons">
+                    <li>
+                        <a href="https://www.facebook.com/Khoinuko2005/"
+                           class="icon brands fa-facebook-f"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="label">Facebook</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.linkedin.com/in/khoivo1907/"
+                           class="icon brands fa-linkedin"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="label">LinkedIn</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://github.com/Nukeoov"
+                           class="icon brands fa-github"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="label">GitHub</span>
+                        </a>
+                    </li>
+                </ul>
+            </header>
+
+            <!-- ==========================
+                 1. PROJECT OVERVIEW
+            ========================== -->
+            <section>
+
+                <p>
+                    <a href="My Projects.html">
+                        &larr; Back to My Projects
+                    </a>
+                </p>
+
+                <p class="project-label">
+                    Power BI / Business Intelligence Project
+                </p>
+
+                <header class="major">
+                    <h1>Revenue Analysis Dashboard</h1>
+                </header>
+
+                <p class="project-subtitle">
+                    Sales Performance | Revenue Analytics |
+                    Business Intelligence
+                </p>
+
+                <div class="project-overview">
+
+                    <h2>Project Overview</h2>
+
+                    <p>
+                        Developed an interactive Power BI
+                        revenue analysis dashboard to evaluate
+                        retail sales performance across
+                        products, stores, regions, and
+                        reporting periods from 2020 to 2022.
+
+                        Integrated transaction-level sales
+                        data with dimensional tables,
+                        implemented DAX measures for revenue,
+                        sales targets, and year-over-year
+                        comparisons, and designed dynamic
+                        reporting using field parameters.
+
+                        The dashboard enables users to monitor
+                        revenue performance, identify
+                        underperforming business areas,
+                        compare actual results against targets,
+                        and support data-driven decisions.
+                    </p>
+
+                </div>
+
+                <!-- FOUR SUMMARY CARDS -->
+                <div class="project-summary">
+
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <span class="icon solid fa-laptop-code"></span>
+                        </div>
+
+                        <h3>Tools</h3>
+
+                        <p>
+                            Power BI<br>
+                            DAX<br>
+                            Power Query<br>
+                            SQL Server
+                        </p>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <span class="icon solid fa-cogs"></span>
+                        </div>
+
+                        <h3>Methods</h3>
+
+                        <p>
+                            Star Schema Modeling<br>
+                            Time Intelligence<br>
+                            KPI Reporting<br>
+                            Field Parameters<br>
+                            Interactive Slicers<br>
+                            Conditional Formatting
+                        </p>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <span class="icon solid fa-bullseye"></span>
+                        </div>
+
+                        <h3>Goal</h3>
+
+                        <p>
+                            Evaluate revenue performance,
+                            identify sales trends,
+                            track performance against targets,
+                            and compare results
+                            across products, locations,
+                            and business periods.
+                        </p>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <span class="icon solid fa-chart-line"></span>
+                        </div>
+
+                        <h3>Deliverable</h3>
+
+                        <p>
+                            An interactive Power BI
+                            dashboard featuring revenue KPIs,
+                            target and YoY comparisons,
+                            regional and product analysis,
+                            dynamic trend charts,
+                            and manager performance reporting.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- ==========================
+                     MAIN DASHBOARD
+                ========================== -->
+                <div class="project-image">
+
+                    <a href="images/Revenue_Analysis.png"
+                       target="_blank"
+                       rel="noopener noreferrer">
+
+                        <img
+                            src="images/Revenue_Analysis.png"
+                            alt="Power BI Revenue Analysis Dashboard"
+                        />
+                    </a>
+
+                   
+
+                </div>
+
+                <!-- KPI HIGHLIGHTS -->
+                <div class="kpi-grid">
+
+                    <div class="kpi-card">
+                        <div class="kpi-value">5.90bn</div>
+                        <div class="kpi-label">
+                            Revenue (VND)
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-value">6.43bn</div>
+                        <div class="kpi-label">
+                            Sales Target (VND)
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-value">92%</div>
+                        <div class="kpi-label">
+                            Target Achievement
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-value negative">-15%</div>
+                        <div class="kpi-label">
+                            Year-over-Year Growth
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ==========================
+                 2. ANALYSIS & INSIGHTS
+            ========================== -->
+            <section>
+
+                <header class="major">
+                    <h2>Analysis & Business Insights</h2>
+                </header>
+
+                <div class="analysis-grid">
+
+                    <!-- LEFT COLUMN -->
+                    <div class="analysis-card">
+
+                        <h3>
+                            <span class="icon solid fa-code-branch"></span>
+                            What I Built
+                        </h3>
+
+                        <ul>
+
+                            <li>
+                                <strong>Data Integration:</strong>
+                                Combined sales transactions,
+                                customer, product, store,
+                                promotion, date,
+                                and sales plan data
+                                into Power BI.
+                            </li>
+
+                            <li>
+                                <strong>Data Modeling:</strong>
+                                Built relationships between
+                                fact and dimension tables
+                                to support cross-filtering
+                                and consistent KPI calculations.
+                            </li>
+
+                            <li>
+                                <strong>Revenue KPIs:</strong>
+                                Created DAX measures for
+                                actual revenue, planned revenue,
+                                customer counts, order counts,
+                                and product quantities.
+                            </li>
+
+                            <li>
+                                <strong>Time Intelligence:</strong>
+                                Developed year-over-year,
+                                monthly, and YTD calculations
+                                to evaluate sales trends.
+                            </li>
+
+                            <li>
+                                <strong>Dynamic Analysis:</strong>
+                                Implemented field parameters
+                                to switch reporting metrics
+                                without creating separate pages.
+                            </li>
+
+                            <li>
+                                <strong>Performance Reporting:</strong>
+                                Built revenue and product-mix
+                                charts, monthly trends,
+                                and store-manager performance
+                                comparisons.
+                            </li>
+
+                            <li>
+                                <strong>Interactivity:</strong>
+                                Added year filters,
+                                promotion slicers,
+                                toggle selections,
+                                and conditional formatting.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN -->
+                    <div class="analysis-card">
+
+                        <h3>
+                            <span class="icon solid fa-lightbulb"></span>
+                            Insights & Recommendations
+                        </h3>
+
+                        <p><strong>Key Insights</strong></p>
+
+                        <ul>
+
+                            <li>
+                                <strong>Revenue:</strong>
+                                VND 5.90 billion in 2022,
+                                compared with a target
+                                of VND 6.43 billion.
+                            </li>
+
+                            <li>
+                                <strong>Target Achievement:</strong>
+                                Revenue reached 92% of plan,
+                                approximately VND 0.53 billion
+                                below target.
+                            </li>
+
+                            <li>
+                                <strong>YoY Growth:</strong>
+                                Revenue declined approximately
+                                15% versus the previous year.
+                            </li>
+
+                            <li>
+                                <strong>Regional Performance:</strong>
+                                Cầu Giấy contributed the largest
+                                revenue share shown (27%),
+                                followed by Hai Bà Trưng (19%).
+                            </li>
+
+                            <li>
+                                <strong>Product Mix:</strong>
+                                Household goods represented
+                                approximately 66% of revenue,
+                                the largest product category.
+                            </li>
+
+                        </ul>
+
+                        <p><strong>Recommendations</strong></p>
+
+                        <ul>
+
+                            <li>
+                                Investigate sales declines
+                                across periods with the largest
+                                negative YoY variance.
+                            </li>
+
+                            <li>
+                                Prioritize underperforming
+                                stores and managers
+                                for performance reviews.
+                            </li>
+
+                            <li>
+                                Analyze product categories
+                                contributing to revenue declines
+                                before adjusting promotions.
+                            </li>
+
+                            <li>
+                                Use actual-versus-target
+                                comparisons to identify
+                                where corrective actions
+                                are needed.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+               
+
+            </section>
+
+            <!-- ==========================
+                 3. DATA MODEL
+            ========================== -->
+            <section>
+
+                <header class="major">
+                    <h2>Data Modeling & Relationships</h2>
+                </header>
+
+                <p class="section-intro">
+                    Designed a star-schema-oriented
+                    Power BI data model centered
+                    on <strong>fact_sales</strong>,
+                    with related customer, product,
+                    store, promotion, and date dimensions.
+
+                    The additional
+                    <strong>fact_sales_plan</strong>
+                    table supports actual-versus-target
+                    analysis through shared reporting
+                    dimensions.
+
+                    The model also contains a calculated
+                    summary table, a field parameter
+                    table, and an organized measures table.
+                </p>
+
+                <!-- MODEL IMAGE -->
+                <div class="project-image">
+
+                    <a href="images/revenue_model.png"
+                       target="_blank"
+                       rel="noopener noreferrer">
+
+                        <img
+                            src="images/revenue_model.png"
+                            alt="Power BI Revenue Star Schema Data Model"
+                            loading="lazy"
+                        />
+                    </a>
+
+                
+                </div>
+
+                <div class="model-highlights">
+
+                    <div class="model-highlight">
+                        <h3>Sales Fact Table</h3>
+                        <p>
+                            fact_sales stores transactions,
+                            sales amounts, quantities,
+                            order dates, and dimension keys.
+                        </p>
+                    </div>
+
+                    <div class="model-highlight">
+                        <h3>Sales Plan Fact Table</h3>
+                        <p>
+                            fact_sales_plan contains
+                            planned revenue by period
+                            and store, supporting
+                            target achievement analysis.
+                        </p>
+                    </div>
+
+                    <div class="model-highlight">
+                        <h3>Field Parameters</h3>
+                        <p>
+                            A disconnected selection table
+                            enables dynamic switching
+                            between revenue, products sold,
+                            orders, and customers.
+                        </p>
+                    </div>
+
+                </div>
+
+                <h3>Modeling Approach</h3>
+
+                <ul>
+                    <li>
+                        Connected the sales fact table
+                        to customer, product, promotion,
+                        store, and date dimensions.
+                    </li>
+
+                    <li>
+                        Used one-to-many relationships
+                        for dimension-based filtering
+                        of transactional records.
+                    </li>
+
+                    <li>
+                        Connected the sales plan table
+                        to shared dimensions to enable
+                        planned-versus-actual reporting.
+                    </li>
+
+                    <li>
+                        Created a calculated table
+                        for product-category aggregation
+                        using DAX SUMMARIZE.
+                    </li>
+
+                    <li>
+                        Organized reusable calculations
+                        in the _Measures table.
+                    </li>
+                </ul>
+
+            </section>
+
+            <!-- ==========================
+                 4. FACT & DIMENSION TABLES
+            ========================== -->
+            <section>
+
+                <header class="major">
+                    <h2>Fact & Dimension Tables</h2>
+                </header>
+
+               
+
+                <div class="table-wrapper">
+
+                    <table class="data-table">
+
+                        <thead>
+                            <tr>
+                                <th>Table</th>
+                                <th>Purpose</th>
+                                <th>Key Information</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>fact_sales</td>
+
+                                <td>
+                                    Main transaction-level
+                                    sales fact table.
+                                </td>
+
+                                <td class="field-list">
+                                    order_number,
+                                    order_line_number,
+                                    customer_key,
+                                    product_key,
+                                    store_key,
+                                    promotion_key,
+                                    order_quantity,
+                                    unit_price,
+                                    unit_cost,
+                                    unit_discount,
+                                    sales_amount,
+                                    order_date,
+                                    ship_date,
+                                    payment_date,
+                                    order_date_key
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>fact_sales_plan</td>
+
+                                <td>
+                                    Planned revenue by
+                                    reporting period
+                                    and store.
+                                </td>
+
+                                <td class="field-list">
+                                    district,
+                                    store,
+                                    date,
+                                    sales_plan
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>dim_customer</td>
+
+                                <td>
+                                    Customer identity,
+                                    demographic attributes,
+                                    and customer grouping.
+                                </td>
+
+                                <td class="field-list">
+                                    customer_key,
+                                    full_name,
+                                    birthday,
+                                    gender,
+                                    marital_status,
+                                    education,
+                                    education_level,
+                                    occupation,
+                                    loyal_group,
+                                    yearly_income,
+                                    yearly_income_group,
+                                    total_children,
+                                    is_active,
+                                    age,
+                                    age_group
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>dim_date</td>
+
+                                <td>
+                                    Calendar dimension
+                                    for time-intelligence
+                                    analysis.
+                                </td>
+
+                                <td class="field-list">
+                                    date,
+                                    day,
+                                    month,
+                                    quarter,
+                                    year,
+                                    day_of_week,
+                                    day_name,
+                                    month_name,
+                                    end_of_month,
+                                    quarter_name,
+                                    working_day
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>dim_product</td>
+
+                                <td>
+                                    Product classification,
+                                    brand information,
+                                    and pricing.
+                                </td>
+
+                                <td class="field-list">
+                                    product_key,
+                                    product_name,
+                                    product_category,
+                                    product_subcategory,
+                                    price,
+                                    cost,
+                                    country,
+                                    brand,
+                                    supplier_name,
+                                    link
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>dim_promotion</td>
+
+                                <td>
+                                    Promotion classification,
+                                    discount rates,
+                                    and promotion periods.
+                                </td>
+
+                                <td class="field-list">
+                                    promotion_key,
+                                    promotion,
+                                    discount_percent,
+                                    type,
+                                    start_date,
+                                    end_date,
+                                    min_qty,
+                                    max_qty
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>dim_store</td>
+
+                                <td>
+                                    Store identification,
+                                    location,
+                                    and manager information.
+                                </td>
+
+                                <td class="field-list">
+                                    store_key,
+                                    store,
+                                    manager,
+                                    manager_image,
+                                    city,
+                                    district,
+                                    ward,
+                                    address
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Calculated Table</td>
+
+                                <td>
+                                    Product-category
+                                    revenue and
+                                    order aggregation.
+                                </td>
+
+                                <td class="field-list">
+                                    product_category,
+                                    sales,
+                                    order
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Parameter</td>
+
+                                <td>
+                                    Field parameter table
+                                    for dynamic metric
+                                    selection.
+                                </td>
+
+                                <td class="field-list">
+                                    Parameter,
+                                    Parameter Fields,
+                                    Parameter Order,
+                                    Parameter value,
+                                    Parameter last year,
+                                    Parameter tăng trưởng
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>_Measures</td>
+
+                                <td>
+                                    Dedicated table for
+                                    reusable analytical
+                                    calculations.
+                                </td>
+
+                                <td class="field-list">
+                                    Revenue,
+                                    Sales Target,
+                                    YoY Growth,
+                                    YTD Revenue,
+                                    Customer Count,
+                                    Order Count,
+                                    Product Quantity,
+                                    KPI Progress
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+               
+
+            </section>
+
+            <!-- ==========================
+                 5. DAX CALCULATIONS
+            ========================== -->
+            <section>
+
+                <header class="major">
+                    <h2>DAX Calculations & Dynamic Reporting</h2>
+                </header>
+
+                <p class="section-intro">
+                    Developed reusable DAX measures
+                    to evaluate revenue performance,
+                    calculate year-over-year changes,
+                    measure sales target achievement,
+                    and support dynamic dashboard
+                    interactions.
+                </p>
+
+                <!-- DAX 1 -->
+                <div class="dax-item">
+
+                    <h3>01. Total Revenue</h3>
+
+                    <p>
+                        Calculates total sales revenue
+                        from fact_sales.
+                        Serves as the primary KPI
+                        and foundation for comparisons.
+                    </p>
+
+                    <pre class="dax-code"><code>Doanh Thu =
+SUM(
+    fact_sales[sales_amount]
+)</code></pre>
+
+                </div>
+
+                <!-- DAX 2 -->
+                <div class="dax-item">
+
+                    <h3>02. Sales Target</h3>
+
+                    <p>
+                        Aggregates planned sales values
+                        from fact_sales_plan.
+                        Used for actual-versus-target
+                        performance reporting.
+                    </p>
+
+                    <pre class="dax-code"><code>Doanh Thu Kế Hoạch =
+SUM(
+    fact_sales_plan[sales_plan]
+)</code></pre>
+
+                </div>
+
+                <!-- DAX 3 -->
+                <div class="dax-item">
+
+                    <h3>03. Target Achievement Percentage</h3>
+
+                    <p>
+                        Measures how much of the
+                        planned revenue has been achieved.
+                        DIVIDE handles zero-denominator
+                        situations safely.
+                    </p>
+
+                    <pre class="dax-code"><code>% Tiến Độ Kế Hoạch Doanh Thu =
+DIVIDE(
+    [Doanh Thu],
+    [Doanh Thu Kế Hoạch],
+    0
+)</code></pre>
+
+                </div>
+
+                <!-- DAX 4 -->
+                <div class="dax-item">
+
+                    <h3>04. Previous Year Revenue</h3>
+
+                    <p>
+                        Retrieves revenue for the
+                        comparable period in the
+                        previous year using
+                        time-intelligence functions.
+                    </p>
+
+                    <pre class="dax-code"><code>Doanh Thu Cùng Kỳ Năm Ngoái =
+CALCULATE(
+    [Doanh Thu],
+    SAMEPERIODLASTYEAR(dim_date[date])
+)</code></pre>
+
+                </div>
+
+                <!-- DAX 5 -->
+                <div class="dax-item">
+
+                    <h3>05. Year-over-Year Revenue Growth</h3>
+
+                    <p>
+                        Calculates the percentage
+                        change in revenue versus
+                        the same period last year.
+
+                        Used in KPI cards
+                        and performance comparisons.
+                    </p>
+
+                    <pre class="dax-code"><code>% Tăng Trưởng So Với Cùng Kỳ =
+DIVIDE(
+    [Doanh Thu] -
+    [Doanh Thu Cùng Kỳ Năm Ngoái],
+    [Doanh Thu Cùng Kỳ Năm Ngoái],
+    0
+)</code></pre>
+
+                </div>
+
+                <!-- DAX 6 -->
+                <div class="dax-item">
+
+                    <h3>06. Year-to-Date Revenue</h3>
+
+                    <p>
+                        Calculates cumulative revenue
+                        from the beginning of the year
+                        through the selected date.
+
+                        Useful for monitoring
+                        annual performance trends.
+                    </p>
+
+                    <pre class="dax-code"><code>Doanh Thu Lũy Kế Năm =
+TOTALYTD(
+    [Doanh Thu],
+    dim_date[date]
+)</code></pre>
+
+                </div>
+
+                <!-- DAX 7 -->
+                <div class="dax-item">
+
+                    <h3>07. Order, Customer & Product KPIs</h3>
+
+                    <p>
+                        Creates three operational
+                        measures that allow the
+                        dashboard to compare
+                        revenue with transaction volume,
+                        customers, and units sold.
+                    </p>
+
+                    <pre class="dax-code"><code>Số Đơn Hàng =
+DISTINCTCOUNT(
+    fact_sales[order_number]
+)
+
+Số Khách Hàng =
+DISTINCTCOUNT(
+    fact_sales[customer_key]
+)
+
+Số Sản Phẩm Bán =
+SUM(
+    fact_sales[order_quantity]
+)</code></pre>
+
+                </div>
+
+                <!-- DAX 8 -->
+                <div class="dax-item">
+
+                    <h3>08. Revenue Share by Product</h3>
+
+                    <p>
+                        Removes product-level filters
+                        to calculate total revenue
+                        and then evaluates each
+                        product category's contribution
+                        to the overall result.
+                    </p>
+
+                    <pre class="dax-code"><code>Doanh Thu Tất Cả Sản Phẩm =
+CALCULATE(
+    [Doanh Thu],
+    ALL(dim_product)
+)
+
+% Tỷ Lệ Doanh Thu Nhóm Sản Phẩm =
+DIVIDE(
+    [Doanh Thu],
+    [Doanh Thu Tất Cả Sản Phẩm]
+)</code></pre>
+
+                   
+
+                </div>
+
+                <!-- DAX 9 -->
+                <div class="dax-item">
+
+                    <h3>09. Dynamic Field Parameter</h3>
+
+                    <p>
+                        Creates a field parameter that
+                        lets users switch between
+                        revenue, product quantity,
+                        orders, and customer count
+                        using the same chart layout.
+                    </p>
+
+                    <pre class="dax-code"><code>Parameter = {
+    (
+        "DOANH THU",
+        NAMEOF('_Measures'[Doanh Thu]),
+        0
+    ),
+    (
+        "SỐ SẢN PHẨM",
+        NAMEOF('_Measures'[Số Sản Phẩm Bán]),
+        1
+    ),
+    (
+        "SỐ ĐƠN HÀNG",
+        NAMEOF('_Measures'[Số Đơn Hàng]),
+        2
+    ),
+    (
+        "SỐ KHÁCH HÀNG",
+        NAMEOF('_Measures'[Số Khách Hàng]),
+        3
+    )
+}</code></pre>
+
+                </div>
+
+                <!-- DAX 10 -->
+                <div class="dax-item">
+
+                    <h3>10. Dynamic Parameter Value</h3>
+
+                    <p>
+                        Uses the selected parameter
+                        to dynamically return the
+                        corresponding measure.
+
+                        Enables flexible reporting
+                        without duplicating visuals.
+                    </p>
+
+                    <pre class="dax-code"><code>Parameter value =
+VAR selection =
+    MAX(Parameter[Parameter])
+
+RETURN
+IF(
+    selection = "DOANH THU",
+    [Doanh Thu],
+    IF(
+        selection = "SỐ SẢN PHẨM",
+        [Số Sản Phẩm Bán],
+        IF(
+            selection = "SỐ ĐƠN HÀNG",
+            [Số Đơn Hàng],
+            [Số Khách Hàng]
+        )
+    )
+)</code></pre>
+
+                </div>
+
+                <!-- DAX 11 -->
+                <div class="dax-item">
+
+                    <h3>11. Calculated Product Summary</h3>
+
+                    <p>
+                        Uses SUMMARIZE to create
+                        an aggregated table by
+                        product category, containing
+                        revenue and order counts.
+
+                        Useful for product-level
+                        performance analysis.
+                    </p>
+
+                    <pre class="dax-code"><code>Calculated Table =
+SUMMARIZE(
+    dim_product,
+    dim_product[product_category],
+    "sales", [Doanh Thu],
+    "order", [Số Đơn Hàng]
+)</code></pre>
+
+                </div>
+
+               
+            </section>
+
+            <!-- ==========================
+                 6. TECHNICAL IMPACT
+            ========================== -->
+            <section>
+
+                <header class="major">
+                    <h2>Technical Impact & Business Value</h2>
+                </header>
+
+                <p>
+                    The dashboard demonstrates
+                    an end-to-end analytics workflow
+                    that integrates retail sales data,
+                    develops reusable performance metrics,
+                    and enables interactive analysis
+                    of revenue and business operations.
+                </p>
+
+                <div class="impact-grid">
+
+                    <div class="impact-card">
+
+                        <span class="icon solid fa-database"></span>
+
+                        <h3>Centralized Data Modeling</h3>
+
+                        <p>
+                            Integrated transaction,
+                            customer, product, store,
+                            promotion, date, and sales plan
+                            data into a structured
+                            Power BI model for consistent
+                            cross-functional analysis.
+                        </p>
+
+                    </div>
+
+                    <div class="impact-card">
+
+                        <span class="icon solid fa-chart-line"></span>
+
+                        <h3>Automated KPI Reporting</h3>
+
+                        <p>
+                            Developed DAX calculations
+                            for revenue, sales target
+                            achievement, YoY growth,
+                            YTD performance, and
+                            operational metrics,
+                            reducing manual
+                            reporting calculations.
+                        </p>
+
+                    </div>
+
+                    <div class="impact-card">
+
+                        <span class="icon solid fa-sliders-h"></span>
+
+                        <h3>Dynamic Reporting</h3>
+
+                        <p>
+                            Implemented field parameters,
+                            interactive filters,
+                            performance comparisons,
+                            and conditional formatting
+                            to support flexible
+                            business analysis.
+                        </p>
+
+                    </div>
+
+                    <div class="impact-card">
+
+                        <span class="icon solid fa-bullseye"></span>
+
+                        <h3>Business Decision Support</h3>
+
+                        <p>
+                            Created reporting tools
+                            to identify revenue gaps,
+                            compare regional and
+                            product performance,
+                            and highlight business
+                            areas requiring management
+                            attention.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <h3 style="margin-top:2rem;">
+                    Project Conclusion
+                </h3>
+
+                <p>
+                    Through this project, I strengthened
+                    my skills in Power BI, DAX,
+                    dimensional data modeling,
+                    time-intelligence analysis,
+                    and interactive dashboard development.
+
+                    The dashboard provides a reusable
+                    framework for monitoring retail
+                    sales performance and translating
+                    operational data into meaningful
+                    business insights.
+
+                    By combining actual revenue,
+                    sales targets, historical trends,
+                    and detailed product and
+                    store-level reporting, the project
+                    demonstrates how business intelligence
+                    tools can support performance
+                    evaluation and data-driven decisions.
+                </p>
+
+                <!-- ACTION BUTTONS -->
+                <div class="project-actions">
+
+                    <a
+                        href="https://github.com/Nukeoov/KPIM_Power_BI_Revenue_Dashboard"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button primary icon brands fa-github">
+                        View GitHub Repository
+                    </a>
+
+                    <a
+                        href="My Projects.html"
+                        class="button icon solid fa-arrow-left">
+                        Back to My Projects
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+
+    <!-- ==========================
+         SIDEBAR
+    ========================== -->
+    <div id="sidebar">
+        <div class="inner">
+
+            <!-- MENU -->
+            <nav id="menu">
+
+                <header class="major">
+                    <h2>Menu</h2>
+                </header>
+
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            Homepage
+                        </a>
+                    </li>
+                    <li>
+                        <a href="My Certificates.html">
+                            My Certificates
+                        </a>
+                    </li>
+                    <li>
+                        <a href="My Projects.html">
+                            My Projects
+                        </a>
+                    </li>
+                    <li>
+                        <a href="My Resume.html">
+                            My Resume
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+
+            <!-- GET IN TOUCH -->
+            <section>
+
+                <header class="major">
+                    <h2>Get in touch</h2>
+                </header>
+
+                <ul class="contact">
+
+                    <li class="icon solid fa-envelope">
+                        <a href="mailto:khoinuko@gmail.com">
+                            khoinuko@gmail.com
+                        </a>
+                    </li>
+
+                    <li class="icon solid fa-phone">
+                        <a href="tel:+13465634517">
+                            (346) 563-4517
+                        </a>
+                    </li>
+
+                    <li class="icon solid fa-home">
+                        Houston, TX
+                    </li>
+
+                </ul>
+
+            </section>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- JAVASCRIPT -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
